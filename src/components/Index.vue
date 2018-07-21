@@ -1,14 +1,18 @@
 <template>
   <div>
     Hello
+    <editor></editor>
+    <viewer></viewer>
   </div>
 </template>
 
 <script>
-  export default {
+import Editor from './Editor'
+import Viewer from './Viewer'
+export default {
+  components: {
+    Editor,
+    Viewer
   }
+}
 </script>
-
-<style scoped>
-
-</style>
