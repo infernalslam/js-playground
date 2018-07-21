@@ -1,6 +1,7 @@
 <template>
   <div>
     Hello const x = 10
+    <button @click="runCode()">Run this code</button>
     <editor :code-mirror="codeMirror"
             :on-cm-code-change="onCmCodeChange"
     ></editor>
@@ -35,15 +36,23 @@ export default {
     }
   },
   methods: {
-    async onCmCodeChange (newCode) {
-      this.code = newCode
-      await delay(1000)
+    runCode () {
       try {
         let expressions = expression(this.code)
         this.result = this.evaluateExpressions(expressions)
       } catch (err) {
         this.errors = err.toString()
       }
+    },
+    async onCmCodeChange (newCode) {
+      this.code = newCode
+      // await delay(1000)
+      // try {
+      //   let expressions = expression(this.code)
+      //   this.result = this.evaluateExpressions(expressions)
+      // } catch (err) {
+      //   this.errors = err.toString()
+      // }
     },
     evaluateExpressions (expressions) {
       const formattedExpressions = _.mapValues(expressions, expression => {
@@ -64,13 +73,18 @@ export default {
   },
   computed: {
     terminal () {
-      let isArray = null
+      let isArray = []
+      console.log('result', this.result)
       for(var key in this.result){
         if(this.result.hasOwnProperty(key)) {
-          if (this.result[key] !== null) isArray = this.result[key]
+          if (this.result[key] !== null) {
+            // console.log(this.result[key])
+            isArray.push(this.result[key])
+          }
         }
       }
-      return isArray
+      console.log(isArray)
+      return isArray.join('\n')
     }
   },
   components: {
