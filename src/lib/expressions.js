@@ -2,7 +2,7 @@
 import esprima from 'esprima'
 
 const parseEsprima = (code) => {
-  console.log(code)
+  console.log('parseEsprima ::', code)
 }
 
 export default parseEsprima

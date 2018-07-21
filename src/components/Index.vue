@@ -11,6 +11,7 @@
 <script>
 import Editor from './Editor'
 import Viewer from './Viewer'
+import expression from '../lib/expressions'
 export default {
   data () {
     return {
@@ -30,6 +31,7 @@ export default {
   methods: {
     onCmCodeChange (newCode) {
       this.code = newCode
+      expression(this.code)
     }
   },
   components: {
