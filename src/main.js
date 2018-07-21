@@ -3,6 +3,11 @@
 import Vue from 'vue'
 import App from './App'
 import router from './router'
+import VueCodemirror from 'vue-codemirror'
+import 'codemirror/lib/codemirror.css'
+// import 'codemirror/theme/base16-dark.css'
+
+Vue.use(VueCodemirror)
 
 Vue.config.productionTip = false
 
