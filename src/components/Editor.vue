@@ -16,7 +16,7 @@ import 'codemirror/theme/seti.css'
 export default {
   data () {
     return {
-      code: 'const x = 10',
+      code: '',
       cmOptions: {
         tabSize: 2,
         mode: 'text/javascript',
