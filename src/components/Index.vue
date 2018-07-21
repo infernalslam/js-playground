@@ -12,6 +12,7 @@
 import Editor from './Editor'
 import Viewer from './Viewer'
 import expression from '../lib/expressions'
+import delay from '../lib/delay'
 export default {
   data () {
     return {
@@ -29,8 +30,9 @@ export default {
     }
   },
   methods: {
-    onCmCodeChange (newCode) {
+    async onCmCodeChange (newCode) {
       this.code = newCode
+      await delay(2000)
       expression(this.code)
     }
   },
