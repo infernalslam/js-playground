@@ -4,7 +4,7 @@
     <editor :code-mirror="codeMirror"
             :on-cm-code-change="onCmCodeChange"
     ></editor>
-    result : {{ result }} <br>
+    result : {{ terminal }} <br>
     errors : {{ errors }}
     <viewer></viewer>
   </div>
@@ -30,7 +30,7 @@ export default {
           line: true
         }
       },
-      result: '',
+      result: [],
       errors: ''
     }
   },
@@ -60,6 +60,17 @@ export default {
         return result
       })
       return _.map(formattedExpressions, (expression, line) => expression)
+    }
+  },
+  computed: {
+    terminal () {
+      let isArray = null
+      for(var key in this.result){
+        if(this.result.hasOwnProperty(key)) {
+          if (this.result[key] !== null) isArray = this.result[key]
+        }
+      }
+      return isArray
     }
   },
   components: {
