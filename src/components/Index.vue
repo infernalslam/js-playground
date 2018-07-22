@@ -6,9 +6,9 @@
      </notifications>
 
     <!-- live -->
-    <div class="columns is-gapless">
+    <div class="columns is-gapless is-mobile">
       <div class="column is-7">
-        <editor :code-mirror="codeMirror" :on-cm-code-change="onCmCodeChange"></editor>
+        <editor :code-mirror="codeMirror" :on-cm-code-change="onCmCodeChange" :on-cm-ready="onCmReady"></editor>
       </div>
       <div class="column" style="background: #282c34;">
         <div>
@@ -31,6 +31,7 @@ import Editor from './Editor'
 import Viewer from './Viewer'
 import expression from '../lib/expressions'
 import _ from 'lodash'
+import emojis from '../lib/emojis'
 export default {
   data () {
     return {
@@ -43,7 +44,13 @@ export default {
           lineNumbers: true,
           lineWrapping: false,
           line: true,
-          gutters: ['CodeMirror-linenumbers', 'breakpoints']
+          gutters: ['CodeMirror-linenumbers', 'breakpoints'],
+          // extraKeys: {
+          //   Ctrl: 'autocomplete'
+          // },
+          foldGutter: true,
+          placeholder: `JS Playground!! with 😘`,
+          styleActiveLine: true
         }
       },
       result: [],
@@ -52,7 +59,8 @@ export default {
         'ambiance',
         'seti',
         'monokai'
-      ]
+      ],
+      emojis: emojis()
     }
   },
   mounted () {
@@ -62,6 +70,12 @@ export default {
     })
   },
   methods: {
+    onCmReady (cm) {
+      cm.on('keypress', () => {
+        console.log(cm)
+        cm.showHint()
+      })
+    },
     runCode () {
       try {
         let expressions = expression(this.code)
@@ -78,6 +92,8 @@ export default {
       }
     },
     async onCmCodeChange (newCode) {
+      let index = Math.floor(Math.random() * (this.emojis.length - 1))
+      this.codeMirror.cmOptions.placeholder = `JS Playground!! with ${this.emojis[index]}`
       this.code = newCode
     },
     evaluateExpressions (expressions) {
@@ -134,5 +150,12 @@ export default {
 <style>
 .CodeMirror {
   height: 100vh !important;
+}
+.CodeMirror-line {
+  font-size: 35px !important;
+}
+.CodeMirror-placeholder {
+  padding-top: 50px !important;
+  font-size: 50px !important;
 }
 </style>
