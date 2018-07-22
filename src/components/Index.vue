@@ -151,9 +151,6 @@ export default {
 .CodeMirror {
   height: 100vh !important;
 }
-.CodeMirror-line {
-  font-size: 35px !important;
-}
 .CodeMirror-placeholder {
   padding-top: 50px !important;
   font-size: 50px !important;
