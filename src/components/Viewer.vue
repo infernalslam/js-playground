@@ -1,9 +1,11 @@
 <template>
   <div>
-    Viewer
+    ``` {{ terminal }}
   </div>
 </template>
 
 <script>
-export default {}
+export default {
+  props: ['terminal']
+}
 </script>

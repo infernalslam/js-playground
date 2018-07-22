@@ -1,6 +1,5 @@
 <template>
   <div>
-    Editor
     <codemirror v-model="codeMirror.code"
                 :options="codeMirror.cmOptions"
                 @input="onCmCodeChange"
