@@ -4,10 +4,12 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import VueCodemirror from 'vue-codemirror'
+import Notifications from 'vue-notification'
 import 'codemirror/lib/codemirror.css'
-// import 'codemirror/theme/base16-dark.css'
+import '../node_modules/bulma/css/bulma.min.css'
 
 Vue.use(VueCodemirror)
+Vue.use(Notifications)
 
 Vue.config.productionTip = false
 

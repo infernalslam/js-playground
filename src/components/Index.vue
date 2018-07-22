@@ -1,16 +1,20 @@
 <template>
   <div>
+     <notifications group="foo-css"
+                   position="bottom left"
+                   :speed="500">
+     </notifications>
 
-     <editor :code-mirror="codeMirror" :on-cm-code-change="onCmCodeChange"></editor>
-     <viewer :terminal="terminal"></viewer>
-    <!-- Hello const x = 10
-    <button @click="runCode()">Run this code</button>
-    <editor :code-mirror="codeMirror"
-            :on-cm-code-change="onCmCodeChange"
-    ></editor>
-    result : {{ terminal }} <br>
-    errors : {{ errors }}
-    <viewer></viewer> -->
+    <!-- live -->
+    <div class="columns is-gapless">
+      <div class="column is-9">
+        <editor :code-mirror="codeMirror" :on-cm-code-change="onCmCodeChange"></editor>
+      </div>
+      <div class="column" style="background: #282c34;">
+        <a class="button is-danger is-small is-outlined" @click="runCode()"> run </a>
+        <viewer :terminal="terminal"></viewer>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -34,8 +38,7 @@ export default {
           line: true
         }
       },
-      result: [],
-      errors: ''
+      result: []
     }
   },
   methods: {
@@ -44,7 +47,13 @@ export default {
         let expressions = expression(this.code)
         this.result = this.evaluateExpressions(expressions)
       } catch (err) {
-        this.errors = err.toString()
+        this.$notify({
+          group: 'foo-css',
+          title: 'ERROR',
+          text: err.toString(),
+          duration: 5000,
+          type: 'error'
+        })
       }
     },
     async onCmCodeChange (newCode) {
@@ -78,8 +87,9 @@ export default {
           }
         }
       }
-      console.log(isArray)
+      // console.log(isArray)
       return isArray.join('\n')
+      // return isArray
     }
   },
   components: {
@@ -88,4 +98,10 @@ export default {
   }
 }
 </script>
+
+<style>
+.CodeMirror {
+  height: 100vh !important;
+}
+</style>
 
