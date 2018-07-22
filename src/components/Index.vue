@@ -74,7 +74,8 @@ export default {
         }
         return result
       })
-      return _.map(formattedExpressions, (expression, line) => expression)
+      return formattedExpressions
+      // return _.map(formattedExpressions, (expression, line) => expression)
     }
   },
   computed: {
@@ -83,13 +84,18 @@ export default {
       for (let key in this.result) {
         if (this.result.hasOwnProperty(key)) {
           if (this.result[key] !== null) {
-            isArray.push(this.result[key])
+            let data = {
+              id: key,
+              value: this.result[key]
+            }
+            isArray.push(data)
           }
         }
       }
+      return isArray
       // console.log(isArray)
-      return isArray.join('\n')
-      // return isArray
+      // return isArray.join('\n')
+      // return this.result
     }
   },
   components: {
@@ -104,4 +110,3 @@ export default {
   height: 100vh !important;
 }
 </style>
-
