@@ -45,9 +45,6 @@ export default {
           lineWrapping: false,
           line: true,
           gutters: ['CodeMirror-linenumbers', 'breakpoints'],
-          // extraKeys: {
-          //   Ctrl: 'autocomplete'
-          // },
           foldGutter: true,
           placeholder: `JS Playground!! with 😘`,
           styleActiveLine: true
