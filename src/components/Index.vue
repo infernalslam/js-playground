@@ -15,7 +15,7 @@
 import Editor from './Editor'
 import Viewer from './Viewer'
 import expression from '../lib/expressions'
-import delay from '../lib/delay'
+// import delay from '../lib/delay'
 import _ from 'lodash'
 export default {
   data () {
@@ -56,6 +56,7 @@ export default {
     },
     evaluateExpressions (expressions) {
       const formattedExpressions = _.mapValues(expressions, expression => {
+        /* eslint-disable no-eval */
         const result = eval(expression)
         if (result && result.type) {
           return result
@@ -74,11 +75,9 @@ export default {
   computed: {
     terminal () {
       let isArray = []
-      console.log('result', this.result)
-      for(var key in this.result){
-        if(this.result.hasOwnProperty(key)) {
+      for (let key in this.result) {
+        if (this.result.hasOwnProperty(key)) {
           if (this.result[key] !== null) {
-            // console.log(this.result[key])
             isArray.push(this.result[key])
           }
         }
