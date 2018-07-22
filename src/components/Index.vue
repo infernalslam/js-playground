@@ -5,13 +5,9 @@
                    :speed="500">
      </notifications>
 
-     <global-events
-        @keyup.ctrl.tab="runCode"
-      ></global-events>
-
     <!-- live -->
     <div class="columns is-gapless">
-      <div class="column is-9">
+      <div class="column is-7">
         <editor :code-mirror="codeMirror" :on-cm-code-change="onCmCodeChange"></editor>
       </div>
       <div class="column" style="background: #282c34;">
@@ -23,21 +19,19 @@
             </option>
           </select>
         </div>
-        <viewer :terminal="terminal"></viewer>
+        <viewer :terminal="terminal" :exec-code="execCode"></viewer>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import hotkeys from 'hotkeys-js'
 import Editor from './Editor'
 import Viewer from './Viewer'
 import expression from '../lib/expressions'
-// import delay from '../lib/delay'
 import _ from 'lodash'
 export default {
-  mounted () {
-  },
   data () {
     return {
       codeMirror: {
@@ -45,13 +39,15 @@ export default {
         cmOptions: {
           tabSize: 2,
           mode: 'text/javascript',
-          theme: 'seti',
+          theme: 'ambiance',
           lineNumbers: true,
           lineWrapping: false,
-          line: true
+          line: true,
+          gutters: ['CodeMirror-linenumbers', 'breakpoints']
         }
       },
       result: [],
+      terminal: [],
       themes: [
         'ambiance',
         'seti',
@@ -59,11 +55,18 @@ export default {
       ]
     }
   },
+  mounted () {
+    let vm = this
+    hotkeys('ctrl+s', (event, handler) => {
+      vm.runCode()
+    })
+  },
   methods: {
     runCode () {
       try {
         let expressions = expression(this.code)
         this.result = this.evaluateExpressions(expressions)
+        this.terminal = this.terminalCode()
       } catch (err) {
         this.$notify({
           group: 'foo-css',
@@ -93,11 +96,8 @@ export default {
         return result
       })
       return formattedExpressions
-      // return _.map(formattedExpressions, (expression, line) => expression)
-    }
-  },
-  computed: {
-    terminal () {
+    },
+    terminalCode () {
       let isArray = []
       for (let key in this.result) {
         if (this.result.hasOwnProperty(key)) {
@@ -111,6 +111,17 @@ export default {
         }
       }
       return isArray
+    }
+  },
+  computed: {
+    execCode () {
+      let str = ''
+      for (let i of this.terminal) {
+        if (i.value) {
+          str += i.value.toString() + '\n'
+        }
+      }
+      return str
     }
   },
   components: {

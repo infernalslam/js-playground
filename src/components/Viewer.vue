@@ -1,13 +1,28 @@
 <template>
   <div>
-    <div v-for="(item, index) in terminal" :key="index">
-      <span v-if="item.value"> ``` {{ item.id }} : {{ item.value }} </span>
-    </div>
+    <codemirror v-model="execCode"
+                :options="cmOptions"
+    >
+    </codemirror>
   </div>
 </template>
 
 <script>
 export default {
-  props: ['terminal']
+  props: ['exec-code'],
+  data () {
+    return {
+      cmOptions: {
+        tabSize: 2,
+        mode: 'text/javascript',
+        theme: 'seti',
+        lineNumbers: true,
+        lineWrapping: true,
+        readOnly: true,
+        line: true,
+        gutters: ['CodeMirror-linenumbers', 'breakpoints']
+      }
+    }
+  }
 }
 </script>
