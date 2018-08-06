@@ -1,7 +1,7 @@
 <template>
   <div>
      <notifications group="foo-css"
-                   position="bottom left"
+                   position="bottom right"
                    :speed="500">
      </notifications>
 
@@ -13,13 +13,17 @@
       <div class="column" style="background: #282c34;">
         <div>
           <a class="button is-danger is-small is-outlined" @click="runCode()"> run </a>
+          <select v-model="modeCopile">
+            <option :value="false">no-auto compile</option>
+            <option :value="true">auto compile</option>
+          </select>
           <select v-model="codeMirror.cmOptions.theme">
             <option v-for="(item, index) in themes" :key="index">
               {{ item }}
             </option>
           </select>
         </div>
-        <viewer :terminal="terminal" :exec-code="execCode"></viewer>
+        <viewer :exec-code="execCode"></viewer>
       </div>
     </div>
   </div>
@@ -32,6 +36,7 @@ import Viewer from './Viewer'
 import expression from '../lib/expressions'
 import _ from 'lodash'
 import emojis from '../lib/emojis'
+import delay from '../lib/delay'
 export default {
   data () {
     return {
@@ -57,7 +62,8 @@ export default {
         'seti',
         'monokai'
       ],
-      emojis: emojis()
+      emojis: emojis(),
+      modeCopile: false
     }
   },
   mounted () {
@@ -69,7 +75,6 @@ export default {
   methods: {
     onCmReady (cm) {
       cm.on('keypress', () => {
-        console.log(cm)
         cm.showHint()
       })
     },
@@ -92,6 +97,10 @@ export default {
       let index = Math.floor(Math.random() * (this.emojis.length - 1))
       this.codeMirror.cmOptions.placeholder = `JS Playground!! with ${this.emojis[index]}`
       this.code = newCode
+      if (this.modeCopile) {
+        await delay(3000)
+        this.runCode()
+      }
     },
     evaluateExpressions (expressions) {
       const formattedExpressions = _.mapValues(expressions, expression => {

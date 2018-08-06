@@ -1,0 +1,32 @@
+[debug] ----------------------------------------------------------------------
+[debug] Command:      /Users/tak/.nvm/versions/node/v8.11.3/bin/node /usr/local/bin/firebase deploy
+[debug] CLI Version:  3.8.0
+[debug] Platform:     darwin
+[debug] Node Version: v8.11.3
+[debug] Time:         Sun Aug 05 2018 22:59:10 GMT+0700 (+07)
+[debug] ----------------------------------------------------------------------
+[debug] 
+[debug] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/projects/js-playground-console  
+ Sun Aug 05 2018 22:59:10 GMT+0700 (+07)
+[debug] <<< HTTP RESPONSE 200
+[debug] >>> HTTP REQUEST GET https://admin.firebase.com/v1/database/js-playground-console/tokens  
+ Sun Aug 05 2018 22:59:12 GMT+0700 (+07)
+[debug] <<< HTTP RESPONSE 200
+[info] 
+[info] === Deploying to 'js-playground-console'...
+[info] 
+[info] i  deploying hosting
+[info] i  hosting: preparing dist directory for upload...
+[debug] >>> HTTP REQUEST PUT https://deploy.firebase.com/v1/hosting/js-playground-console/uploads/-LJ9o5YdBnP0X4puYISo?fileCount=10&message=  
+ Sun Aug 05 2018 22:59:16 GMT+0700 (+07)
+[debug] <<< HTTP RESPONSE 200
+[debug] [hosting] .tgz uploaded successfully, waiting for extraction
+[info] ✔  hosting: 10 files uploaded successfully
+[info] i  starting release process (may take several minutes)...
+[debug] >>> HTTP REQUEST POST https://deploy.firebase.com/v1/projects/js-playground-console/releases { hosting: 
+   { public: 'dist',
+     version: '-LJ9o5YdBnP0X4puYISo',
+     prefix: '-LJ9o5YdBnP0X4puYISo/',
+     manifest: [] } } 
+ Sun Aug 05 2018 22:59:55 GMT+0700 (+07)
