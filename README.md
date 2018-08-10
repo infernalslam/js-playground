@@ -1,6 +1,11 @@
 # js-playground-console
 ## This project is playground for dev
 
+### feature
+```
+auto compile code
+```
+
 ![alt text](./ScreenShot.png)
 
 
